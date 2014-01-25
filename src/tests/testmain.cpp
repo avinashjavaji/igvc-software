@@ -1,4 +1,5 @@
 #include <QTest>
+#include <tests/teststereoprocessing.hpp>
 #include "teststringutils.hpp"
 #include <vector>
 #include <algorithm>
@@ -35,4 +36,6 @@ int main(int argc, const char* argv[])
 
     // Execute selected test cases
     RunTestCase(new TestStringUtils(), args);
+    RunTestCase(new TestStereoProcessing(), args);
+
 }
