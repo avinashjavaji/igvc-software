@@ -26,7 +26,6 @@ SOURCES += \
     ../src/gui/configtreemodel.cpp \
     ../src/gui/batteryindicator.cpp \
     ../src/hardware/sensors/gps/nmea.cpp \
-    ../src/hardware/sensors/gps/HemisphereA100GPS.cpp \
     ../src/hardware/sensors/joystick/Joystick.cpp \
     ../src/hardware/sensors/lidar/SimulatedLidar.cpp \
     ../src/hardware/sensors/lidar/NAV200.cpp \
@@ -45,14 +44,16 @@ SOURCES += \
     ../src/hardware/sensors/gps/simulatedgps.cpp \
     ../src/intelligence/posetracking/RobotPosition.cpp \
     ../src/common/utils/ImageUtils.cpp \
-    ../src/common/Robot.cpp \
     ../src/hardware/sensors/camera/CameraInfo.cpp \
     ../src/gui/adapters/gpsadapter.cpp \
     ../src/hardware/sensors/camera/StereoPlayback.cpp \
     ../src/hardware/sensors/camera/StereoImageRepeater.cpp \
     ../src/hardware/sensors/camera/Bumblebee2.cpp \
     ../src/gui/adapters/imuadapter.cpp \
-    ../src/hardware/sensors/lidar/lms200.cpp
+    ../src/hardware/sensors/lidar/lms200.cpp \
+    ../src/common/utils/GPSWaypointSource.cpp \
+    ../src/common/utils/gpsfilereader.cpp \
+    ../src/hardware/sensors/gps/nmeacompatiblegps.cpp
 
 HEADERS  += \
     ../src/common/config/configmanager.h \
@@ -65,21 +66,20 @@ HEADERS  += \
     ../src/gui/configtreemodel.h \
     ../src/gui/batteryindicator.h \
     ../src/hardware/sensors/gps/nmea.hpp \
-    ../src/hardware/sensors/gps/HemisphereA100GPS.h \
     ../src/hardware/sensors/gps/GPS.hpp \
     ../src/hardware/sensors/joystick/Joystick.h \
     ../src/hardware/sensors/lidar/SimulatedLidar.h \
     ../src/hardware/sensors/lidar/NAV200.h \
     ../src/hardware/sensors/lidar/Lidar.h \
-    ../src/hardware/sensors/DataStructures/VisOdomData.hpp \
-    ../src/hardware/sensors/DataStructures/StereoImageData.hpp \
-    ../src/hardware/sensors/DataStructures/SensorData.h \
-    ../src/hardware/sensors/DataStructures/IMUData.hpp \
-    ../src/hardware/sensors/DataStructures/ImageData.hpp \
-    ../src/hardware/sensors/DataStructures/GPSData.h \
-    ../src/hardware/sensors/DataStructures/GPSAccuracy.hpp \
-    ../src/hardware/sensors/DataStructures/DataPoint.hpp \
-    ../src/hardware/sensors/DataStructures/DataArray.hpp \
+    ../src/common/datastructures/VisOdomData.hpp \
+    ../src/common/datastructures/StereoImageData.hpp \
+    ../src/common/datastructures/SensorData.h \
+    ../src/common/datastructures/IMUData.hpp \
+    ../src/common/datastructures/ImageData.hpp \
+    ../src/common/datastructures/GPSData.h \
+    ../src/common/datastructures/GPSAccuracy.hpp \
+    ../src/common/datastructures/DataPoint.hpp \
+    ../src/common/datastructures/DataArray.hpp \
     ../src/hardware/serial/ASIOSerialPort.h \
     ../src/gui/adapters/joystickadapter.h \
     ../src/gui/adapters/cameraadapter.h \
@@ -100,7 +100,6 @@ HEADERS  += \
     ../src/hardware/sensors/IMU/IMU.h \
     ../src/intelligence/posetracking/RobotPosition.h \
     ../src/common/utils/ImageUtils.h \
-    ../src/common/Robot.h \
     ../src/hardware/sensors/camera/CameraInfo.h \
     ../src/gui/adapters/gpsadapter.h \
     ../src/hardware/sensors/camera/StereoSource.hpp \
@@ -109,7 +108,13 @@ HEADERS  += \
     ../src/hardware/sensors/camera/StereoImageRepeater.h \
     ../src/hardware/sensors/camera/Bumblebee2.h \
     ../src/gui/adapters/imuadapter.h \
-    ../src/hardware/sensors/lidar/lms200.h
+    ../src/hardware/sensors/lidar/lms200.h \
+    ../src/common/datastructures/GPSData.hpp \
+    ../src/common/utils/GPSUtils.h \
+    ../src/common/utils/AngleUtils.h \
+    ../src/common/utils/GPSWaypointSource.h \
+    ../src/common/utils/gpsfilereader.h \
+    ../src/hardware/sensors/gps/nmeacompatiblegps.h
 
 FORMS    += \
     ../src/gui/mainwindow.ui \

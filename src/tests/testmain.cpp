@@ -1,6 +1,9 @@
 #include <QTest>
 #include <tests/teststereoprocessing.hpp>
 #include "teststringutils.hpp"
+#include "testgpsutils.h"
+#include "testangleutils.h"
+#include "testgpsreader.hpp"
 #include <vector>
 #include <algorithm>
 #include <iostream>
@@ -37,5 +40,7 @@ int main(int argc, const char* argv[])
     // Execute selected test cases
     RunTestCase(new TestStringUtils(), args);
     RunTestCase(new TestStereoProcessing(), args);
-
+    RunTestCase(new TestGPSUtils(), args);
+    RunTestCase(new TestAngleUtils(), args);
+    RunTestCase(new TestGPSReader(), args);
 }

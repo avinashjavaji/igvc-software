@@ -27,35 +27,30 @@ private Q_SLOTS:
         using namespace std;
         Mat leftImage = imread("/media/StorageDrive/DepthMaptest/depth_test_left.jpg",CV_LOAD_IMAGE_GRAYSCALE);
         Mat rightImage = imread("/media/StorageDrive/DepthMaptest/depth_test_right.jpg",CV_LOAD_IMAGE_GRAYSCALE);
+        //Mat leftImage = imread("/media/StorageDrive/DepthMaptest/img_left2.jpg",CV_LOAD_IMAGE_GRAYSCALE);
+        //Mat rightImage = imread("/media/StorageDrive/DepthMaptest/img_right2.jpg",CV_LOAD_IMAGE_GRAYSCALE);
         if(!leftImage.data){
             QFAIL("Could not open or find the left image");
         }
         if(!rightImage.data){
             QFAIL("Could not open or find the right image");
         }
-        /*Mat disparity;
+        Mat disparity;
 
         StereoBM stereo = StereoBM(CV_STEREO_BM_BASIC, 16, 15);
         stereo.operator()(leftImage, rightImage, disparity);
 
         double min;
         double max;
-        cv::minMaxIdx(disparity, &min, &max);
-        cv::Mat adjMap;
-        // expand your range to 0..255. Similar to histEq();
-        map.convertTo(adjMap,CV_8UC1, 255 / (max-min), -min);
+        minMaxIdx(disparity, &min, &max);
 
-        // this is great. It converts your grayscale image into a tone-mapped one,
-        // much more pleasing for the eye
-        // function is found in contrib module, so include contrib.hpp
-        // and link accordingly
-        cv::Mat falseColorsMap;
-        applyColorMap(adjMap, falseColorsMap, cv::COLORMAP_AUTUMN);
+        Mat disparity2;
 
-        imshow("left", leftImage);
-        imshow("right",rightImage);
-        imshow("Disparity",falseColorsMap);
-        cvWaitKey();*/
+        disparity.convertTo(disparity2, CV_8U,255/(max-min));
+
+        imshow("Disparity",disparity2);
+        //imwrite("/media/StorageDrive/DepthMaptest/disparity.jpg", disparity);
+        cvWaitKey();
     }
 };
 
