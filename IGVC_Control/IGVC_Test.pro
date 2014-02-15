@@ -1,5 +1,5 @@
 
-QT       += testlib core declarative gui
+QT       += testlib xml core gui declarative
 
 TARGET = IGVC_Test
 CONFIG   += console
@@ -16,11 +16,21 @@ DEFINES += SRCDIR=\\\"$$PWD/\\\"
 
 SOURCES += ../src/tests/testmain.cpp \
     ../src/common/utils/StringUtils.cpp \
+    ../src/intelligence/posetracking/positiontracker.cpp \
+    ../src/common/config/configmanager.cpp \
     ../src/common/logger/logger.cpp \
-    ../src/common/utils/gpsfilereader.cpp
+    ../src/common/utils/gpsfilereader.cpp \
+    ../src/hardware/sensors/gps/nmeacompatiblegps.cpp \
+    ../src/hardware/serial/ASIOSerialPort.cpp \
+    ../src/hardware/sensors/gps/nmea.cpp \
+    ../src/intelligence/posetracking/basicpositiontracker.cpp
 
 HEADERS += ../src/tests/teststringutils.hpp \
     ../src/common/utils/StringUtils.hpp \
+    ../src/tests/testpositiontracker.hpp \
+    ../src/intelligence/posetracking/positiontracker.h \
+    ../src/common/config/configmanager.h \
+    ../src/common/logger/logger.h \
     ../src/tests/testgpsutils.h \
     ../src/common/utils/GPSUtils.h \
     ../src/common/utils/AngleUtils.h \
@@ -28,7 +38,12 @@ HEADERS += ../src/tests/teststringutils.hpp \
     ../src/tests/testgpsreader.hpp \
     ../src/common/logger/logger.h \
     ../src/common/utils/gpsfilereader.h \
-    ../src/tests/teststereoprocessing.hpp
+    ../src/tests/teststereoprocessing.hpp \
+    ../src/tests/capturegpsandpostracker.hpp \
+    ../src/hardware/sensors/gps/nmeacompatiblegps.h \
+    ../src/hardware/serial/ASIOSerialPort.h \
+    ../src/hardware/sensors/gps/nmea.hpp \
+    ../src/intelligence/posetracking/basicpositiontracker.h
 
 # libUSB (for LIDAR)
 

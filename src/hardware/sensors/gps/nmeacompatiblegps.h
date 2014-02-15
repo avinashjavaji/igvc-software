@@ -12,22 +12,18 @@
 
 #include <list>
 
-namespace IGVC {
-namespace Sensors {
-
 /*!
  * \brief For connecting to the Hemisphere A100 GPS device
  * \headerfile HemisphereA100GPS.h <hardware/sensors/gps/HemisphereA100GPS.h>
  */
-class NMEACompatibleGPS: public IGVC::Sensors::GPS {
+class NMEACompatibleGPS: public GPS {
 public:
-    NMEACompatibleGPS();
+    NMEACompatibleGPS(std::string devicePath, uint baudRate);
 	GPSData GetState();
-	GPSData GetStateAtTime(timeval time);
+    GPSData GetStateAtTime(timeval);
 	bool StateIsAvailable();
     bool isOpen();
     ~NMEACompatibleGPS();
-	GPSAccuracy DefaultAccuracy;
 
 private:
 
@@ -45,6 +41,4 @@ private:
 	bool parseLine(std::string line, GPSData &state); // parses a line from the GPS device
 };
 
-} /* namespace Sensors */
-} /* namespace IGVC */
 #endif /* HEMISPHEREA100GPS_H_ */
