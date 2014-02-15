@@ -53,7 +53,9 @@ SOURCES += \
     ../src/hardware/sensors/lidar/lms200.cpp \
     ../src/common/utils/GPSWaypointSource.cpp \
     ../src/common/utils/gpsfilereader.cpp \
-    ../src/hardware/sensors/gps/nmeacompatiblegps.cpp
+    ../src/hardware/sensors/gps/nmeacompatiblegps.cpp \
+    ../stereotuner.cpp \
+    ../src/gui/adapters/stereotuner.cpp
 
 HEADERS  += \
     ../src/common/config/configmanager.h \
@@ -114,7 +116,9 @@ HEADERS  += \
     ../src/common/utils/AngleUtils.h \
     ../src/common/utils/GPSWaypointSource.h \
     ../src/common/utils/gpsfilereader.h \
-    ../src/hardware/sensors/gps/nmeacompatiblegps.h
+    ../src/hardware/sensors/gps/nmeacompatiblegps.h \
+    ../stereotuner.h \
+    ../src/gui/adapters/stereotuner.h
 
 FORMS    += \
     ../src/gui/mainwindow.ui \
@@ -123,7 +127,8 @@ FORMS    += \
     ../src/gui/adapters/mapadapter.ui \
     ../src/gui/adapters/cameraadapter.ui \
     ../src/gui/adapters/gpsadapter.ui \
-    ../src/gui/adapters/imuadapter.ui
+    ../src/gui/adapters/imuadapter.ui \
+    ../src/gui/adapters/stereotuner.ui
 
 RESOURCES += \
     ../src/gui/resources.qrc
