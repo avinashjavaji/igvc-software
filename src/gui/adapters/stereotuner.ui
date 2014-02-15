@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>StereoTuner</class>
+ <widget class="QWidget" name="StereoTuner">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>289</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="1">
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="verticalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOn</enum>
+     </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>192</width>
+        <height>462</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="13" column="0">
+        <widget class="QSlider" name="uniquenessRatioSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="preFilterSizeLabel">
+         <property name="text">
+          <string>PreFilter Size</string>
+         </property>
+        </widget>
+       </item>
+       <item row="14" column="0">
+        <widget class="QLabel" name="speckleWindowSizeLabel">
+         <property name="text">
+          <string>SpeckleWindow Size</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0">
+        <widget class="QLabel" name="uniquenessRatioLabel">
+         <property name="text">
+          <string>Uniqueness Ratio</string>
+         </property>
+        </widget>
+       </item>
+       <item row="17" column="0">
+        <widget class="QSlider" name="speckleRangeSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="QLabel" name="minDisparityLabel">
+         <property name="text">
+          <string>Min Disparity</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="textureThresholdLabel">
+         <property name="text">
+          <string>Texture Threshold</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="SADWindowSizeLineInput"/>
+       </item>
+       <item row="15" column="0">
+        <widget class="QSlider" name="speckleWindowSizeSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="numberOfDisparitiesLabel">
+         <property name="text">
+          <string>Number of Disparities</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QSlider" name="minDisparitySlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="preFilterCapLabel">
+         <property name="text">
+          <string>PreFilter Cap</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QSlider" name="numberOfDisparitiesSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QSlider" name="preFilterSizeSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
+        <widget class="QSlider" name="textureThresholdSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="16" column="0">
+        <widget class="QLabel" name="speckleRangeLabel">
+         <property name="text">
+          <string>Speckle Range</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="SADWindowSizeLabel">
+         <property name="text">
+          <string>SAD Window Size</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QSlider" name="SADWindowSizeSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QSlider" name="preFilterCapSlider">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="numberOfDisparitiesLineInput"/>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="preFilterSizeLineInput"/>
+       </item>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="preFilterCapLineInput"/>
+       </item>
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="minDisparityLineInput"/>
+       </item>
+       <item row="11" column="1">
+        <widget class="QLineEdit" name="textureThresholdLineInput"/>
+       </item>
+       <item row="13" column="1">
+        <widget class="QLineEdit" name="uniquenessRatioLineInput"/>
+       </item>
+       <item row="15" column="1">
+        <widget class="QLineEdit" name="speckleWindowSizeLineInput"/>
+       </item>
+       <item row="17" column="1">
+        <widget class="QLineEdit" name="speckleRangeLineInput"/>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="displayLabel">
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

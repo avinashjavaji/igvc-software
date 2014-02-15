@@ -25,10 +25,10 @@ private Q_SLOTS:
     {
         using namespace cv;
         using namespace std;
-        Mat leftImage = imread("/media/StorageDrive/DepthMaptest/depth_test_left.jpg",CV_LOAD_IMAGE_GRAYSCALE);
-        Mat rightImage = imread("/media/StorageDrive/DepthMaptest/depth_test_right.jpg",CV_LOAD_IMAGE_GRAYSCALE);
-        //Mat leftImage = imread("/media/StorageDrive/DepthMaptest/img_left2.jpg",CV_LOAD_IMAGE_GRAYSCALE);
-        //Mat rightImage = imread("/media/StorageDrive/DepthMaptest/img_right2.jpg",CV_LOAD_IMAGE_GRAYSCALE);
+        //Mat leftImage = imread("/media/StorageDrive/DepthMaptest/depth_test_left.jpg",CV_LOAD_IMAGE_GRAYSCALE);
+        //Mat rightImage = imread("/media/StorageDrive/DepthMaptest/depth_test_right.jpg",CV_LOAD_IMAGE_GRAYSCALE);
+        Mat leftImage = imread("/media/StorageDrive/DepthMaptest/img_left2.jpg",CV_LOAD_IMAGE_GRAYSCALE);
+        Mat rightImage = imread("/media/StorageDrive/DepthMaptest/img_right2.jpg",CV_LOAD_IMAGE_GRAYSCALE);
         if(!leftImage.data){
             QFAIL("Could not open or find the left image");
         }
@@ -38,6 +38,17 @@ private Q_SLOTS:
         Mat disparity;
 
         StereoBM stereo = StereoBM(CV_STEREO_BM_BASIC, 16, 15);
+
+        stereo.state->SADWindowSize = 15;
+        stereo.state->numberOfDisparities = 16;
+        stereo.state->preFilterSize = 63;
+        stereo.state->preFilterCap = 63;
+        stereo.state->minDisparity = 0;
+        stereo.state->textureThreshold = 30;
+        stereo.state->uniquenessRatio = 3;
+        stereo.state->speckleWindowSize = 20;
+        stereo.state->speckleRange = 32;
+
         stereo.operator()(leftImage, rightImage, disparity);
 
         double min;
