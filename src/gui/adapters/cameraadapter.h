@@ -31,8 +31,8 @@ protected:
 private slots:
     void on_saveLeft_clicked();
 
-private slots:
-    void on_saveLeft_clicked();
+    void onCameraData(StereoImageData data);
+
 
 private:
     Ui::CameraAdapter *ui;
@@ -47,9 +47,6 @@ private:
     boost::mutex _mutex;
 
     QImage CVMat2QImage(cv::Mat img);
-
-    void OnCameraData(StereoImageData data);
-    LISTENER(CameraAdapter, OnCameraData, StereoImageData)
 };
 
 #endif // CAMERAADAPTER_H

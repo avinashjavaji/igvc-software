@@ -1,35 +1,45 @@
 #ifndef BASICPOSITIONTRACKER_H
 #define BASICPOSITIONTRACKER_H
 
-#include <common/datastructures/GPSData.hpp>
-#include <common/datastructures/IMUData.hpp>
+#include <hardware/sensors/gps/GPS.hpp>
+#include <hardware/sensors/IMU/IMU.h>
 #include <common/datastructures/robotposition.hpp>
-#include <common/events/Event.hpp>
+#include <QObject>
 
 /**
  * @brief Tracks the robots position relative to it's starting location in meters.
  */
-class BasicPositionTracker
+class BasicPositionTracker : public QObject
 {
+    Q_OBJECT
 public:
-    BasicPositionTracker();
+    BasicPositionTracker(GPS *gps, IMU *imu);
+
+    ~BasicPositionTracker();
 
     RobotPosition GetPosition();
 
-    Event<RobotPosition> onNewPosition;
+    void Reset();
 
-private:
+    void ChangeGPS(GPS *gps);
+    void ChangeIMU(IMU *imu);
+
+signals:
+    void onNewPosition(RobotPosition);
+    void onOriginPercentage(int);
+
+private slots:
     void onNewGPS(GPSData data);
     void onNewIMU(IMUData data);
 
+private:
     RobotPosition currentPosition;
     GPSData origin;
 
-    int originPointsRecorded;
+    GPS *_gps;
+    IMU *_imu;
 
-public:
-    LISTENER(BasicPositionTracker, onNewGPS, GPSData)
-    LISTENER(BasicPositionTracker, onNewIMU, IMUData)
+    int originPointsRecorded;
 };
 
 #endif // BASICPOSITIONTRACKER_H

@@ -40,7 +40,6 @@ SOURCES += \
     ../src/gui/adapters/lidaradapter.cpp \
     ../src/hardware/sensors/IMU/Ardupilot.cpp \
     ../src/gui/adapters/mapadapter.cpp \
-    ../src/intelligence/mapping/mapping.cpp \
     ../src/hardware/sensors/gps/simulatedgps.cpp \
     ../src/common/utils/ImageUtils.cpp \
     ../src/hardware/sensors/camera/CameraInfo.cpp \
@@ -57,7 +56,8 @@ SOURCES += \
     ../stereotuner.cpp \
     ../src/gui/adapters/stereotuner.cpp \
     ../src/intelligence/posetracking/basicpositiontracker.cpp \
-    ../src/gui/adapters/positiontrackeradapter.cpp
+    ../src/gui/adapters/positiontrackeradapter.cpp \
+    ../src/intelligence/mapping/mapbuilder.cpp
 
 HEADERS  += \
     ../src/common/config/configmanager.h \
@@ -98,7 +98,6 @@ HEADERS  += \
     ../src/gui/adapters/lidaradapter.h \
     ../src/hardware/sensors/IMU/Ardupilot.h \
     ../src/gui/adapters/mapadapter.h \
-    ../src/intelligence/mapping/mapping.h \
     ../src/hardware/sensors/gps/simulatedgps.h \
     ../src/hardware/sensors/IMU/IMU.h \
     ../src/common/utils/ImageUtils.h \
@@ -116,6 +115,7 @@ HEADERS  += \
     ../src/common/datastructures/GPSData.hpp \
     ../src/common/utils/GPSUtils.h \
     ../src/common/utils/AngleUtils.h \
+    ../src/common/datastructures/GPSData.hpp \
     ../src/common/utils/GPSWaypointSource.h \
     ../src/common/utils/gpsfilereader.h \
     ../src/hardware/sensors/gps/nmeacompatiblegps.h \
@@ -123,7 +123,8 @@ HEADERS  += \
     ../src/gui/adapters/stereotuner.h \
     ../src/intelligence/posetracking/basicpositiontracker.h \
     ../src/common/datastructures/robotposition.hpp \
-    ../src/gui/adapters/positiontrackeradapter.h
+    ../src/gui/adapters/positiontrackeradapter.h \
+    ../src/intelligence/mapping/mapbuilder.h
 
 FORMS    += \
     ../src/gui/mainwindow.ui \
@@ -165,7 +166,7 @@ PRE_TARGETDEPS += /usr/lib/libboost_system.a
 INCLUDEPATH += /usr/include/pcl-1.7
 DEPENDPATH += /usr/include/pcl-1.7
 
-LIBS += -L/usr/lib -lpcl_common -lpcl_visualization -lpcl_kdtree
+LIBS += -L/usr/lib -lpcl_common -lpcl_visualization -lpcl_kdtree -lpcl_filters
 
 # VTK (PCL Dependency)
 INCLUDEPATH += /usr/include/vtk-5.8
