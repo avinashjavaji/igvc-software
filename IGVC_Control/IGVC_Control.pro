@@ -53,7 +53,6 @@ SOURCES += \
     ../src/common/utils/GPSWaypointSource.cpp \
     ../src/common/utils/gpsfilereader.cpp \
     ../src/hardware/sensors/gps/nmeacompatiblegps.cpp \
-    ../stereotuner.cpp \
     ../src/gui/adapters/stereotuner.cpp \
     ../src/intelligence/posetracking/basicpositiontracker.cpp \
     ../src/gui/adapters/positiontrackeradapter.cpp \
@@ -119,7 +118,6 @@ HEADERS  += \
     ../src/common/utils/GPSWaypointSource.h \
     ../src/common/utils/gpsfilereader.h \
     ../src/hardware/sensors/gps/nmeacompatiblegps.h \
-    ../stereotuner.h \
     ../src/gui/adapters/stereotuner.h \
     ../src/intelligence/posetracking/basicpositiontracker.h \
     ../src/common/datastructures/robotposition.hpp \
