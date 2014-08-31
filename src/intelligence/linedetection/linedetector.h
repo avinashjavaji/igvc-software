@@ -22,7 +22,7 @@ class LineDetector : public QObject
     Q_OBJECT
 
 public:
-    LineDetector(std::shared_ptr<BasicPositionTracker> _posTracker);
+    LineDetector();
     pcl::PointCloud<pcl::PointXYZ> cloud;
 
 public slots:
@@ -31,7 +31,7 @@ public slots:
 signals:
     void onNewLines(ImageData data);
     void onNewLinesMat(cv::Mat mat);
-    void onNewCloud(pcl::PointCloud<pcl::PointXYZ>::Ptr data, pcl::PointXY sensorOffset, RobotPosition pos);
+    void onNewCloud(pcl::PointCloud<pcl::PointXYZ>::Ptr data, pcl::PointXY sensorOffset);
 private:
     float getAvg(void);
     void blackAndWhite(float totalAvg);
