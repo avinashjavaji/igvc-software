@@ -58,40 +58,6 @@ void LineDetector::onImageEvent(ImageData imgd){
 //    cout << "Time elapsed: " << timeElapsed <<endl;
 }
 
-//void LineDetector::myTransformPoints(){
-//    //pcam is where the coordinates are in actual space (in meters right now)
-//    //pcam = (cv::Mat_<float>(4,2) << offset-12,72, offset, 72, offset, 60,offset -12, 60);
-//   // pcam = (cv::Mat_<float>(4,2) << 4,81, -8, 81, -8, 93,4, 93);
-//    int squareSize = ConfigManager::Instance().getValue("LineDetector", "SquareSize", 100);
-//    pcam = (cv::Mat_<float>(4,2) << transformDst.cols/2 - (squareSize/2),transformDst.rows-squareSize, transformDst.cols/2+(squareSize/2), transformDst.rows-squareSize, transformDst.cols/2-(squareSize/2), transformDst.rows - squareSize*2, transformDst.cols/2+(squareSize/2), transformDst.rows - squareSize*2);
-//    //pcam = pcam/0.0245+ConfigManager::Instance().getValue("Line Detector", "Disp Offset", 100);
-//    //p is where they show up as pixels on the camera
-//    //p = (cv::Mat_<float>(4,2) << 427, 642, 515, 642, 512, 589, 432, 588);
-//    // p= (cv::Mat_<float>(4,2) << 440, 674, 356, 679, 364, 631, 439, 627);
-//     p= (cv::Mat_<float>(4,2) << 344, 646, 668, 636, 415, 496, 619, 488);
-//    //pcam = pcam*3+450; //This is just so we can see it on the screen
-//    //Getting the transform
-//    transformMat = cv::getPerspectiveTransform(p, pcam);
-//    //Apply the transform to dst and store result in transformDST
-//    cv::warpPerspective(dst, transformDst, transformMat, transformDst.size());
-//}
-
-//void LineDetector::myToPointCloud(){
-//    cloud.points.clear();
-//    int squareSize = ConfigManager::Instance().getValue("LineDetector", "SquareSize", 100);
-//    //Add points to the cloud if they are white (right now only checking the first layer)
-//    for (int r=0; r<transformDst.rows;r++){
-//        for (int c=0; c<transformDst.cols; c++){
-//            if (transformDst.at<cv::Vec3b>(r,c)[0]==255){
-//                float x = ( c - ( transformDst.cols/2. ) ) / (float)squareSize;
-//                float y = ( transformDst.rows - r ) / (float)squareSize;
-//                cloud.points.push_back(pcl::PointXYZ(x, y, 0));
-//            }
-//        }
-//    }
-//}
-
-
 void LineDetector::Erosion()
 {
   int erosion_type;
@@ -131,21 +97,23 @@ void LineDetector::blackAndWhite(float totalAvg){
     Vec3b p;
     int rows = dst.rows;
     int cols = dst.cols;
-
+    uchar* myRow;
     //Turn the top quarter of the screen and bottom sixth of the screen black
     //We can disregard these areas - may extend the bottom of the screen slightly later on
     for (int i = 0; i< rows*4/9; i++){
-        for(int j=0; j< cols; j++){
-             dst.at<Vec3b>(i,j)[0] = 0;
-             dst.at<Vec3b>(i,j)[1] = 0;
-             dst.at<Vec3b>(i,j)[2] = 0;
+        myRow = dst.ptr<uchar>(i);
+        for(int j=0; j< cols*3; j+=3){
+            myRow[j] = 0;
+            myRow[j+1]=0;
+            myRow[j+2] =0;
         }
     }
     for (int i = rows*5/6; i< rows; i++){
-        for(int j=0; j< cols; j++){
-             dst.at<Vec3b>(i,j)[0] = 0;
-             dst.at<Vec3b>(i,j)[1] = 0;
-             dst.at<Vec3b>(i,j)[2] = 0;
+        myRow = dst.ptr<uchar>(i);
+        for(int j=0; j< cols*3; j+=3){
+             myRow[j] = 0;
+             myRow[j+1] =0;
+             myRow[j+2]=0;
         }
     }
 
@@ -160,29 +128,32 @@ void LineDetector::blackAndWhite(float totalAvg){
     float blueDown = ConfigManager::Instance().getValue("LineDetector", "BlueDown", 1.1);
     int diff = ConfigManager::Instance().getValue("LineDetector", "diff", 5);
     for (int i = rows*4/9; i< rows*5/6; i++){
-        for(int j=0; j< cols; j++){
+        myRow = dst.ptr<uchar>(i);
+        for(int j=0; j< cols*3; j+=3){
             tempAvg = totalAvg*(1.1 - i*.1/768);
-            p = dst.at<Vec3b>(i, j); //Current pixel
+           // p = dst.at<Vec3b>(i, j); //Current pixel
+            uchar blue = myRow[j];
+            uchar green = myRow[j+1];
+            uchar red = myRow[j+2];
 
             //If there is a significant amount of red in the pixel, it's most likely an orange cone
             //Get rid of the obstacle
-            if (p[2] > totalAvg*2|| p[2] > 253){
+            if (red > totalAvg*2|| red > 253){
                 detectObstacle(i, j);
             }
 
             //Filters out the white and makes it pure white
-            if((p[0]>tempAvg*blueDown)&& (p[0] < tempAvg*blueUp)&& (p[1] < tempAvg*greenUp)&&(p[2]>tempAvg*redDown) &&
-                    (p[2]<tempAvg*redUp)&&(p[1]>tempAvg*greenDown)&&(abs(p[1] - p[2]) <tempAvg/diff)){
-                dst.at<Vec3b>(i,j)[0] = 255;
-                dst.at<Vec3b>(i,j)[1] = 255;
-                dst.at<Vec3b>(i,j)[2] = 255;
-
+            if((blue>tempAvg*blueDown)&& (blue < tempAvg*blueUp)&& (green < tempAvg*greenUp)&&(red>tempAvg*redDown) &&
+                    (red<tempAvg*redUp)&&(green>tempAvg*greenDown)&&(abs(green - red) <tempAvg/diff)){
+                myRow[j] = 255;
+                myRow[j+1] = 255;
+                myRow[j+2] = 255;
             }
 
             else { //Otherwise, set pixel to black
-                dst.at<Vec3b>(i,j)[0] = 0;
-                dst.at<Vec3b>(i,j)[1] = 0;
-                dst.at<Vec3b>(i,j)[2] = 0;//all 0's
+                myRow[j] =0;
+                myRow[j+1]=0;
+                myRow[j+2]=0;
             }
         }
     }
@@ -193,35 +164,41 @@ void LineDetector::blackAndWhite(float totalAvg){
  *  \param col the column of the left of the obstacle
  */
 void LineDetector::detectObstacle(int row, int col){
-    Vec3b p = dst.at<Vec3b>(row,col);
+    uchar* myRow = dst.ptr<uchar> (row);
+    uchar red = myRow[col+2];
+
     int row2 = row;
     int col2 = col;
-
+    row++;
     //While the pixel is still orange, turn it black
     //Then on to the next one, by row
-    while (p[2]>100){
-        dst.at<Vec3b>(row2, col)[0] = 0;
-        dst.at<Vec3b>(row2, col)[1] = 0;
-        dst.at<Vec3b>(row2, col)[2] = 0;
-        p = dst.at<Vec3b>(++row2, col);
+    while (red>100){
+        myRow[col] =0;
+        myRow[col+1]=0;
+        myRow[col+2]=0;
+        myRow = dst.ptr<uchar>(++row2);
+        red = myRow[col+2];
     }
-    p = dst.at<Vec3b>(row,col);
+    myRow = dst.ptr<uchar>(row);
+    red = myRow[col+2];
 
     //While the pixel is still orange, turn it black
     //Then on to the next one, by column
-    while (p[2]>100){
-        dst.at<Vec3b>(row, col2)[0] = 0;
-        dst.at<Vec3b>(row, col2)[1] = 0;
-        dst.at<Vec3b>(row, col2)[2] = 0;
-        p = dst.at<Vec3b>(row, ++col2);
+    while (red>100){
+        myRow[col2] =0;
+        myRow[col2+1]=0;
+        myRow[col2+2]=0;
+        col2+=3;
+        red = myRow[col2+2];
     }
 
     //Turn everything in that block we just found black
     for(int i = row+1; i<row2;i++){
-        for (int j = col+1; j<col2; j++){
-            dst.at<Vec3b>(i,j)[0] = 0;
-            dst.at<Vec3b>(i,j)[1] = 0;
-            dst.at<Vec3b>(i,j)[2] = 0;
+        myRow = dst.ptr<uchar>(i);
+        for (int j = col+1; j<col2; j+=3){
+            myRow[j] =0;
+            myRow[j+1]=0;
+            myRow[j+2]=0;
         }
     }
 }
@@ -235,9 +212,9 @@ float LineDetector::getAvg(){
     Vec3b p;
         float totalAvg = 0;
         for (int i = dst.rows/3; i< 5*dst.rows/6; i++){
-            for(int j=dst.cols/6; j< 5*dst.cols/6; j++){
-                p = dst.at<Vec3b>(i, j);
-                totalAvg += (p[0]+p[1]+p[2])/3;
+            const uchar* myRow = dst.ptr<uchar>(i);
+            for(int j=dst.cols/2; j< 5*dst.cols/2; j+=3){
+                totalAvg += (myRow[j]+myRow[j+1]+myRow[j+2])/3;
             }
         }
         totalAvg = (25*totalAvg)/(dst.cols*dst.rows*8);
@@ -245,22 +222,5 @@ float LineDetector::getAvg(){
         return totalAvg;
 }
 
-/**
- *  \brief LineDetector::blackoutSection turns a section of the image black
- *  \param rowl the lower row bound
- *  \param rowu the upper row bound
- *  \param coll the left column bound
- *  \param colu the right column bound
- */
-void LineDetector::blackoutSection(int rowl, int rowu, int coll, int colu){
-
-    for (int i=rowl;i<=rowu;i++){
-        for (int j = coll; j<=colu; j++){
-            dst.at<Vec3b>(i,j)[0] = 0;
-            dst.at<Vec3b>(i,j)[1] = 0;
-            dst.at<Vec3b>(i,j)[2] = 0;
-        }
-    }
-}
 
 

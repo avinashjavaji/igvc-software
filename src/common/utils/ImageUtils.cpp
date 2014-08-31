@@ -214,9 +214,11 @@ pcl::PointCloud<pcl::PointXYZ> toPointCloud(Mat src){
     //Add points to the cloud if they are white (right now only checking the first layer)
 
     for (int r=0; r<src.rows;r++){
-        for (int c=0; c<src.cols; c++){
-            if (src.at<cv::Vec3b>(r,c)[0]==255){
-                float x = ( c - ( src.cols/2. ) ) / (float)squareSize;
+        const uchar* row = src.ptr<uchar>(r);
+        for (int c=0; c<src.cols*3; c+=3){
+
+            if (row[c]==255){
+                float x = ( c/3 - ( src.cols/2. ) ) / (float)squareSize;
                 float y = ( src.rows - r ) / (float)squareSize;
                 cloud.points.push_back(pcl::PointXYZ(x, y, 0));
 

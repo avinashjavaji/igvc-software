@@ -8,7 +8,6 @@ transformer::transformer(Event<ImageData> &evtSrc)
     :LonImageEvent(this)
 {
     evtSrc += &LonImageEvent;
-    //TODO here put in the coordinates of pc1-pc2
     //As measured in real life
     int offset = 0; //20
     pcam = (cv::Mat_<float>(4,2) << offset-12,72, offset, 72, offset, 60,offset -12, 60);
