@@ -39,6 +39,8 @@ private slots:
 
     void on_saveRight_clicked();
 
+//    void on_saveLeft_released();
+
 private:
     Ui::CameraAdapter *ui;
 

@@ -5,8 +5,11 @@
 #include <common/utils/ImageUtils.h>
 
 BarrelFinder::BarrelFinder(QObject *)
+    : cloud(new pcl::PointCloud<pcl::PointXYZ>)
 {
     _moduleName = "Barrel Finder";
+//    pcl::PointCloud<pcl::PointXYZ>::Ptr _cloud(new pcl::PointCloud<pcl::PointXYZ>);
+//    cloud = _cloud;
 }
 
 bool BarrelFinder::isWorking() {
@@ -186,6 +189,10 @@ void BarrelFinder::onNewImage(ImageData data)
     pcl::PointXY offset;
     offset.x = ConfigManager::Instance().getValue("BarrelFinder", "Xoffset", 0);
     offset.y = ConfigManager::Instance().getValue("BarrelFinder", "Yoffset", 0);
+
+    if(cloud == NULL || cloud->empty())
+        return;
+
     newCloudFrame(cloud, offset);
 
 }

@@ -15,7 +15,7 @@ CameraAdapter::CameraAdapter(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect(ui->saveLeft,SIGNAL(released()),SLOT(on_saveLeft_clicked()));
+    connect(ui->saveLeft,SIGNAL(released()), this, SLOT(on_saveRight_clicked()));
 
     prevTimeRight = 0;
     prevTimeLeft = 0;
