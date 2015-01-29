@@ -41,10 +41,10 @@ void LineDetector::onImageEvent(ImageData imgd){
     Erosion();
     Dilation();
     cv::Mat transformDst(dst.rows, dst.cols, CV_8UC3);
-    transformPoints(dst, transformDst);
-    cloud = toPointCloud(transformDst);
+    //transformPoints(dst, transformDst);
+    //cloud = toPointCloud(transformDst);
 
-    onNewLines(ImageData(transformDst));
+    onNewLines(ImageData(dst));
     onNewLinesMat(dst);
     cout <<"Sending new matrix"<<endl;
     pcl::PointXY offset;
@@ -126,8 +126,8 @@ void LineDetector::blackAndWhite(float totalAvg){
     float redDown = ConfigManager::Instance().getValue("LineDetector", "RedDown", 1);
     float greenUp = ConfigManager::Instance().getValue("LineDetector", "GreenUp", 1.7);
     float greenDown = ConfigManager::Instance().getValue("LineDetector", "GreenDown", .8);
-    float blueUp = ConfigManager::Instance().getValue("LineDetector", "BlueUp", 1.9);
-    float blueDown = ConfigManager::Instance().getValue("LineDetector", "BlueDown", 1);
+    float blueUp = ConfigManager::Instance().getValue("LineDetector", "BlueUp", 2.3);
+    float blueDown = ConfigManager::Instance().getValue("LineDetector", "BlueDown", 0);
     int diff = ConfigManager::Instance().getValue("LineDetector", "diff", 5);
     for (int i = rows*4/9; i< rows*5/6; i++){
         for(int j=0; j< cols; j++){
