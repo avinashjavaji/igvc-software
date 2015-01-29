@@ -45,7 +45,7 @@ void LineDetector::onImageEvent(ImageData imgd){
     cloud = toPointCloud(transformDst);
 
     onNewLines(ImageData(transformDst));
-    onNewLinesMat(dst);
+    onNewLinesMat(transformDst);
     cout <<"Sending new matrix"<<endl;
     pcl::PointXY offset;
     offset.x = ConfigManager::Instance().getValue("Camera", "OffsetX", 0.0f);
@@ -126,8 +126,8 @@ void LineDetector::blackAndWhite(float totalAvg){
     float redDown = ConfigManager::Instance().getValue("LineDetector", "RedDown", 1);
     float greenUp = ConfigManager::Instance().getValue("LineDetector", "GreenUp", 1.7);
     float greenDown = ConfigManager::Instance().getValue("LineDetector", "GreenDown", .8);
-    float blueUp = ConfigManager::Instance().getValue("LineDetector", "BlueUp", 1.7);
-    float blueDown = ConfigManager::Instance().getValue("LineDetector", "BlueDown", 1.1);
+    float blueUp = ConfigManager::Instance().getValue("LineDetector", "BlueUp", 1.9);
+    float blueDown = ConfigManager::Instance().getValue("LineDetector", "BlueDown", 1);
     int diff = ConfigManager::Instance().getValue("LineDetector", "diff", 5);
     for (int i = rows*4/9; i< rows*5/6; i++){
         for(int j=0; j< cols; j++){
@@ -136,23 +136,23 @@ void LineDetector::blackAndWhite(float totalAvg){
 
             //If there is a significant amount of red in the pixel, it's most likely an orange cone
             //Get rid of the obstacle
-            if (p[2] > totalAvg*2|| p[2] > 253){
+            if (/*p[2] > totalAvg*2 && */p[2] > 253){
                 detectObstacle(i, j);
             }
 
             //Filters out the white and makes it pure white
-            if((p[0]>tempAvg*blueDown)&& (p[0] < tempAvg*blueUp)&& (p[1] < tempAvg*greenUp)&&(p[2]>tempAvg*redDown) &&
-                    (p[2]<tempAvg*redUp)&&(p[1]>tempAvg*greenDown)&&(abs(p[1] - p[2]) <tempAvg/diff)){
-                dst.at<Vec3b>(i,j)[0] = 255;
-                dst.at<Vec3b>(i,j)[1] = 255;
-                dst.at<Vec3b>(i,j)[2] = 255;
+            if((p[0]>tempAvg*blueDown) && (p[0] < tempAvg*blueUp) || (p[0] < 20 && p[1] < 20 && p[2] < 20) //*&& (p[1] < tempAvg*greenUp) && (p[2]>tempAvg*redDown)*/
+                    /*&& (p[2]<tempAvg*redUp) && (p[1]>tempAvg*greenDown)*//* && (abs(p[1] - p[2]) <tempAvg/diff)*/) {
+                dst.at<Vec3b>(i,j)[0] = 0;
+                dst.at<Vec3b>(i,j)[1] = 0;
+                dst.at<Vec3b>(i,j)[2] = 0;
 
             }
 
             else { //Otherwise, set pixel to black
-                dst.at<Vec3b>(i,j)[0] = 0;
-                dst.at<Vec3b>(i,j)[1] = 0;
-                dst.at<Vec3b>(i,j)[2] = 0;//all 0's
+                dst.at<Vec3b>(i,j)[0] = 255;
+                dst.at<Vec3b>(i,j)[1] = 255;
+                dst.at<Vec3b>(i,j)[2] = 255;//all 0's
             }
         }
     }
